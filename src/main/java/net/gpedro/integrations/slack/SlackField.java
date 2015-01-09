@@ -13,7 +13,12 @@ public class SlackField {
 	private boolean shorten = false;
 	private String title = null;
 	private String value = null;
-	
+
+	public SlackField(String title, String value) {
+		this.title = title;
+		this.value = value;
+	}
+
 	public void addAllowedMarkdown(String field) {
 		if(this.allowMarkdown == null) {
 			this.allowMarkdown = new ArrayList<String>();
@@ -39,22 +44,24 @@ public class SlackField {
 		return data;
 	}
 
-	public void setAllowedMarkdown(ArrayList<String> allowMarkdown) {
-		if(allowMarkdown != null) {
-			this.allowMarkdown = allowMarkdown;
-		}
+	public SlackField setAllowedMarkdown(ArrayList<String> allowMarkdown) {
+		this.allowMarkdown = new ArrayList<String>(allowMarkdown);
+		return this;
 	}
 	
-	public void setShorten(boolean shorten) {
+	public SlackField setShorten(boolean shorten) {
 		this.shorten = shorten;
+		return this;
 	}
 	
-	public void setTitle(String title) {
+	public SlackField setTitle(String title) {
 		this.title = title;
+		return this;
 	}
 	
-	public void setValue(String value) {
+	public SlackField setValue(String value) {
 		this.value = value;
+		return this;
 	}
 	
 	public JsonObject toJson() {

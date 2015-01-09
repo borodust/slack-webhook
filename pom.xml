@@ -2,7 +2,22 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.gpedro.integrations.slack</groupId>
   <artifactId>slack-webhook</artifactId>
-  <version>1.0.2</version>
+  <version>2.0.1-SNAPSHOT</version>
+
+  <scm>
+    <connection>scm:git:git@github.com:borodust/slack-webhook.git</connection>
+    <developerConnection>scm:git:git@github.com:borodust/slack-webhook.git</developerConnection>
+    <url>https://github.com/borodust/slack-webhook</url>
+    <tag>HEAD</tag>
+  </scm>
+
+  <distributionManagement>
+    <repository>
+      <id>bintray-borodust-maven-slack-webhook-integration</id>
+      <name>borodust-maven-slack-webhook-integration</name>
+      <url>https://api.bintray.com/maven/borodust/maven/slack-webhook-integration</url>
+    </repository>
+  </distributionManagement>
 
   <build>
     <plugins>
@@ -15,10 +30,53 @@
           <target>1.5</target>
         </configuration>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.5.1</version>
+        <configuration>
+          <useReleaseProfile>false</useReleaseProfile>
+          <releaseProfiles>release</releaseProfiles>
+          <autoVersionSubmodules>true</autoVersionSubmodules>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <additionalparam>-Xdoclint:none</additionalparam>
+        </configuration>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
   <dependencies>
+    <dependency>
+      <groupId>com.squareup.okhttp</groupId>
+      <artifactId>okhttp</artifactId>
+      <version>2.2.0</version>
+    </dependency>
 	<dependency>
 		<groupId>com.google.code.gson</groupId>
 		<artifactId>gson</artifactId>

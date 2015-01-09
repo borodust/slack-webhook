@@ -1,6 +1,7 @@
 package net.gpedro.integrations.slack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.google.gson.JsonArray;
@@ -8,7 +9,7 @@ import com.google.gson.JsonObject;
 
 public class SlackMessage {
 
-	private List<SlackAttachment> attach = null;
+	private List<SlackAttachment> attach = new ArrayList<SlackAttachment>();
 	private String channel  = null;
 	private String icon     = null;
 	private JsonObject slackMessage = new JsonObject();
@@ -16,32 +17,22 @@ public class SlackMessage {
 	private String text     = null;
 	private String username = null;
 	
-	public SlackMessage() {
-		
-	}
-	
 	public SlackMessage(String text) {
 		this.text = text;
 	}
 	
 	public SlackMessage(String username, String text) {
+		this(text);
 		this.username = username;
-		this.text = text;
 	}
-	
+
 	public SlackMessage(String channel, String username, String text) {
+		this(username, text);
 		this.channel = channel;
-		if(username != null) {
-			this.username = username;
-		}
-		this.text = text;
 	}
 	
-	public SlackMessage addAttachments(SlackAttachment attach) {
-		if(this.attach == null) {
-			this.attach = new ArrayList<SlackAttachment>(); 
-		}
-		this.attach.add(attach);
+	public SlackMessage addAttachments(SlackAttachment... otherAttachments) {
+		this.attach.addAll(Arrays.asList(otherAttachments));
 		
 		return this;
 	}
@@ -85,50 +76,34 @@ public class SlackMessage {
 		return attachs;
 	}
 
-	public SlackMessage removeAttachment(Integer index) {
-		if(this.attach != null) {
-			this.attach.remove(index);
-		}
-
+	public SlackMessage removeAttachment(int index) {
+		this.attach.remove(index);
 		return this;
 	}
 	
 	public SlackMessage setAttachments(ArrayList<SlackAttachment> attach) {
-		this.attach = attach;
-		
+		this.attach = new ArrayList<SlackAttachment>(attach);
 		return this;
 	}
-	
+
 	public SlackMessage setChannel(String channel) {
-		if(channel != null) {
-			this.channel = channel;
-		}
-		
+		this.channel = channel;
 		return this;
 	}
-	
+
 	// http://www.emoji-cheat-sheet.com/
 	public SlackMessage setIcon(String icon) {
-		if(icon != null) {
-			this.icon = icon;
-		}
-		
+		this.icon = icon;
 		return this;
 	}
-	
+
 	public SlackMessage setText(String message) {
-		if(message != null) {
-			this.text = message;
-		}
-		
+		this.text = message;
 		return this;
 	}
-	
+
 	public SlackMessage setUsername(String username) {
-		if(username != null) {
-			this.username = username;
-		}
-		
+		this.username = username;
 		return this;
 	}
 }

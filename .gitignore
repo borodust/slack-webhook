@@ -10,3 +10,17 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# intellij idea files and directories
+.idea/
+*.iml
+*.ipr
+
+# build dir
+target
+
+# local project directory
+/local/
+
+# emacs files
+*~

@@ -1,6 +1,7 @@
 package net.gpedro.integrations.slack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.google.gson.JsonArray;
@@ -13,14 +14,17 @@ public class SlackAttachment {
 	private String pretext;
 	private String color;
 	private List<SlackField> fields;
-	
-	
-	public SlackAttachment addFields(SlackField field) {
+
+	public SlackAttachment(String fallback) {
+		this.fallback = fallback;
+	}
+
+	public SlackAttachment addFields(SlackField... field) {
 		if(this.fields == null) {
 			this.fields = new ArrayList<SlackField>();
 		}
 		
-		this.fields.add(field);
+		this.fields.addAll(Arrays.asList(field));
 		
 		return this;
 	}
@@ -38,17 +42,14 @@ public class SlackAttachment {
 		return data;
 	}
 
-	public SlackAttachment removeFields(Integer index) {
-		if(this.fields != null) {
-			this.fields.remove(index);
-		}
-		
+	public SlackAttachment removeFields(int index) {
+		this.fields.remove(index);
 		return this;
 	}
 
 	public SlackAttachment setColor(String color) {
 		if(color != null) {
-			if(color.charAt(0) == '#') {
+			if(color.length() > 0 && color.charAt(0) == '#') {
 				if(!isHex(color.substring(1))) {
 					throw new IllegalArgumentException("Invalid Hex Color @ SlackAttachment");
 				}
@@ -64,13 +65,11 @@ public class SlackAttachment {
 
 	public SlackAttachment setFallback(String fallback) {
 		this.fallback = fallback;
-		
 		return this;
 	}
 
 	public SlackAttachment setFields(ArrayList<SlackField> fields) {
-		this.fields = fields;
-		
+		this.fields = new ArrayList<SlackField>(fields);
 		return this;
 	}
 
